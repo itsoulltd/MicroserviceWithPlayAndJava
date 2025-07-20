@@ -1,4 +1,6 @@
 ##### Prerequisite JDK-11, Scala & sbt
+    ##Current Scala:v-3.7.1; sbt:v-1.11.3; Java:v-11.0.18
+    ##PlayFramework:v-3.0.8
     ##Install JDK & Configure $PATH+=$JAVA_HOME
     ##Follow Linux or MacOS or Windows Instruction.
     
