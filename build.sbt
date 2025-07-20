@@ -4,6 +4,7 @@ organization := "com.infoworks.lab"
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
+                                      .settings(PlayKeys.playDefaultPort := 8080)
 
 scalaVersion := "2.13.16"
 
