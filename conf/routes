@@ -8,5 +8,9 @@ GET     /                           controllers.HomeController.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-# Api/v1/students route-mapping:
+# Routing for Student apis: path=/api/v1/students
 GET    /api/v1/students/:id             controllers.StudentController.retrieve(id:Int)
+GET    /api/v1/students                 controllers.StudentController.retrieveAll()
+POST   /api/v1/students                 controllers.StudentController.create(request: Request)
+PUT    /api/v1/students                 controllers.StudentController.update(request: Request)
+DELETE /api/v1/students/:id             controllers.StudentController.delete(id:Int)
