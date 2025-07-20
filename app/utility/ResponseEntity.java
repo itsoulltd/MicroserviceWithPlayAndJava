@@ -2,6 +2,8 @@ package utility;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
+import play.mvc.Result;
+import play.mvc.Results;
 
 public class ResponseEntity<E> {
 
@@ -13,47 +15,47 @@ public class ResponseEntity<E> {
         }
     }
 
-    public static <T> ObjectNode ok(T body) {
+    public static <T> Result ok(T body) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", true);
         result.put("status", 200);
         updateObjectNode(result, body);
-        return result;
+        return Results.ok(result);
     }
 
-    public static <T> ObjectNode created(T body) {
+    public static <T> Result created(T body) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", true);
         result.put("status", 201);
         updateObjectNode(result, body);
-        return result;
+        return Results.created(result);
     }
 
-    public static ObjectNode unauthorized(String...message) {
+    public static Result unauthorized(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 401);
         result.put("reason", String.join("; ", message));
-        return result;
+        return Results.unauthorized(result);
     }
 
-    public static ObjectNode badRequest(String...message) {
+    public static Result badRequest(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 400);
         result.put("reason", String.join("; ", message));
-        return result;
+        return Results.badRequest(result);
     }
 
-    public static ObjectNode notFound(String...message) {
+    public static Result notFound(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 404);
         result.put("reason", String.join("; ", message));
-        return result;
+        return Results.notFound(result);
     }
 
-    public static <T> ObjectNode internalServerError(T error) {
+    public static <T> Result internalServerError(T error) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 500);
@@ -62,7 +64,7 @@ public class ResponseEntity<E> {
         } else {
             result.put("error", error.toString());
         }
-        return result;
+        return Results.internalServerError(result);
     }
 
 }
