@@ -13,5 +13,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += guice
 libraryDependencies += "com.github.itsoulltd" % "JSQLEditor" % "v1.1.5.6-RELEASE"
 libraryDependencies += "com.github.itsoulltd.WebComponentKit" % "http-rest-client" % "v1.14.5-RELEASE"
+libraryDependencies += "javax.el" % "javax.el-api" % "3.0.0"
+libraryDependencies += "org.hibernate.validator" % "hibernate-validator" % "6.0.13.Final"
 
 

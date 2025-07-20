@@ -1,11 +1,15 @@
 package domain.entities;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Student {
-
+    @NotEmpty(message = "firstName must not be null or empty!")
     private String firstName;
+    @NotEmpty(message = "lastName must not be null or empty!")
     private String lastName;
+    @Min(value = 18, message = "Age min value is 18.")
     private int age;
     private int id;
 
