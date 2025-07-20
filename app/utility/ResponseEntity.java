@@ -29,25 +29,27 @@ public class ResponseEntity<E> {
         return result;
     }
 
-    public static ObjectNode unauthorized() {
+    public static ObjectNode unauthorized(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 401);
-        //TODO:
+        result.put("reason", String.join("; ", message));
         return result;
     }
 
-    public static ObjectNode badRequest() {
+    public static ObjectNode badRequest(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 400);
+        result.put("reason", String.join("; ", message));
         return result;
     }
 
-    public static ObjectNode notFound() {
+    public static ObjectNode notFound(String...message) {
         ObjectNode result = Json.newObject();
         result.put("isSuccessful", false);
         result.put("status", 404);
+        result.put("reason", String.join("; ", message));
         return result;
     }
 
