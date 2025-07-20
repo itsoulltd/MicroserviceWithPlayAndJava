@@ -2,7 +2,6 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import domain.entities.Student;
 import domain.repositories.StudentRepository;
 import play.libs.Json;
@@ -14,9 +13,6 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-import static play.mvc.Results.notFound;
-import static play.mvc.Results.ok;
-
 public class StudentController {
 
     private StudentRepository repository;
@@ -26,36 +22,61 @@ public class StudentController {
         this.repository = repository;
     }
 
-    private void check() {
-        ObjectNode node = ResponseEntity.ok("Message Okay!");
-        ObjectNode badRequest = ResponseEntity.badRequest();
-        ObjectNode error = ResponseEntity.internalServerError(new Exception("Internal Server Error Message"));
-    }
-
     public Result retrieve(int id) {
         final Optional<Student> studentOptional = repository.findById(id);
         return studentOptional.map(student -> {
             JsonNode jsonObjects = Json.toJson(student);
-            return ok(ResponseEntity.ok(jsonObjects));
-        }).orElse(notFound(ResponseEntity.notFound("Student with id:" + id + " not found")));
+            return ResponseEntity.ok(jsonObjects);
+        }).orElse(ResponseEntity.notFound("Student with id:" + id + " not found"));
     }
 
     public Result retrieveAll() {
         List<Student> result = repository.findAll(1, 10);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonData = mapper.convertValue(result, JsonNode.class);
-        return ok(ResponseEntity.ok(jsonData));
+        return ResponseEntity.ok(jsonData);
     }
 
     public Result create(Http.Request request) {
-        return ok(ResponseEntity.ok("UnderConstruction"));
+        JsonNode json = request.body().asJson();
+        if (json == null) {
+            return ResponseEntity.badRequest("Expecting Json data");
+        }
+        //Deserialize Object from Json:
+        Student student = Json.fromJson(json, Student.class);
+        //TODO:Bean-Validation
+        //Save:
+        Optional<Student> saved = repository.save(student);
+        return saved.map(svd -> {
+            JsonNode jsonObject = Json.toJson(svd);
+            return ResponseEntity.created(jsonObject);
+        }).orElse(ResponseEntity.internalServerError("Could not create data."));
     }
 
     public Result update(Http.Request request) {
-        return ok(ResponseEntity.ok("UnderConstruction"));
+        JsonNode json = request.body().asJson();
+        if (json == null) {
+            return ResponseEntity.badRequest("Expecting Json data");
+        }
+        //Deserialize Object from Json:
+        Student student = Json.fromJson(json, Student.class);
+        //TODO:Bean-Validation
+        //Update:
+        Optional<Student> updated = repository.update(student);
+        return updated.map(upd -> {
+            if (upd == null) {
+                return ResponseEntity.notFound("Student not found");
+            }
+            JsonNode jsonObject = Json.toJson(upd);
+            return ResponseEntity.ok(jsonObject);
+        }).orElse(ResponseEntity.internalServerError("Could not create data."));
     }
 
     public Result delete(int id) {
-        return ok(ResponseEntity.ok("UnderConstruction"));
+        boolean status = repository.delete(id);
+        if (!status) {
+            return ResponseEntity.notFound("Student with id:" + id + " not found");
+        }
+        return ResponseEntity.ok("Student with id:" + id + " deleted");
     }
 }
