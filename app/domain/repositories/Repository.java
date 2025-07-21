@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface Repository<ID, Entity> {
     DataSource<ID, Entity> getDatasource();
+    long count();
     Optional<Entity> findById(ID id);
     List<Entity> findAll(int page, int limit);
     Optional<Entity> save(Entity entity);

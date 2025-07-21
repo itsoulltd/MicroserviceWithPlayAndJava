@@ -16,6 +16,11 @@ public class DSRepository<ID, Entity> implements Repository<ID, Entity> {
         return dataSource;
     }
 
+    @Override
+    public long count() {
+        return dataSource.size();
+    }
+
     public Optional<Entity> findById(ID id) {
         return Optional.ofNullable(dataSource.read(id));
     }

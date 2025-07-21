@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import domain.entities.Student;
 import domain.repositories.StudentRepository;
 import play.libs.Json;
@@ -22,6 +23,13 @@ public class StudentController {
     @Inject
     public StudentController(StudentRepository repository) {
         this.repository = repository;
+    }
+
+    public Result count() {
+        long count = repository.count();
+        ObjectNode result = Json.newObject();
+        result.put("count", count);
+        return ResponseEntity.ok(result);
     }
 
     public Result retrieve(int id) {

@@ -9,6 +9,7 @@ GET     /                           controllers.HomeController.index()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # Routing for Student apis: path=/api/v1/students
+GET    /api/v1/students/count           controllers.StudentController.count()
 GET    /api/v1/students/:id             controllers.StudentController.retrieve(id:Int)
 GET    /api/v1/students                 controllers.StudentController.retrieveAll()
 POST   /api/v1/students                 controllers.StudentController.create(request: Request)

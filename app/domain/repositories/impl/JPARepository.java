@@ -13,6 +13,11 @@ public class JPARepository<ID, Entity> implements Repository<ID, Entity> {
     }
 
     @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
     public Optional<Entity> findById(ID id) {
         return Optional.empty();
     }
