@@ -23,7 +23,7 @@ public class StudentRepository extends DSRepository<Integer, Student> {
     }
 
     public Optional<Student> save(Student student) {
-        int id = getDatasource().size();
+        int id = getDatasource().size() + 1;
         student.setId(id);
         getDatasource().put(id, student);
         return Optional.ofNullable(student);
