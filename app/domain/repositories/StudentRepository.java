@@ -11,10 +11,6 @@ import java.util.stream.Stream;
 public class StudentRepository extends DSRepository<Integer, Student> {
 
     public List<Student> findAll(int page, int limit) {
-        //FIXME: bug in getDatasource().readSync api:
-        if (limit > getDatasource().size())
-            limit = getDatasource().size();
-        //
         int offset = getOffset(page, limit);
         Object[] items = getDatasource().readSync(offset, limit);
         return Stream.of(items)
