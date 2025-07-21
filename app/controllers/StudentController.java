@@ -40,8 +40,8 @@ public class StudentController {
         }).orElse(ResponseEntity.notFound("Student with id:" + id + " not found"));
     }
 
-    public Result retrieveAll() {
-        List<Student> result = repository.findAll(1, 10);
+    public Result retrieveAll(int page, int limit) {
+        List<Student> result = repository.findAll(page, limit);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonData = mapper.convertValue(result, JsonNode.class);
         return ResponseEntity.ok(jsonData);
