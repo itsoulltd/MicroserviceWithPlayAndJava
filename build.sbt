@@ -18,4 +18,10 @@ libraryDependencies += "javax.el" % "javax.el-api" % "3.0.0"
 libraryDependencies += "org.glassfish" % "jakarta.el" % "3.0.3"
 libraryDependencies += "org.hibernate.validator" % "hibernate-validator" % "6.0.13.Final"
 
+libraryDependencies ++= Seq(
+  javaJdbc,
+  "org.postgresql" % "postgresql" % "42.2.1",
+  "com.h2database" % "h2" % "1.4.200"
+)
+
 

@@ -2,15 +2,21 @@ package domain.repositories.impl;
 
 import com.it.soul.lab.data.base.DataSource;
 import domain.repositories.Repository;
+import play.db.Database;
 
 import java.util.List;
 import java.util.Optional;
 
-public class JDBCRepository<ID, Entity> implements Repository<ID, Entity> {
+public abstract class JDBCRepository<ID, Entity> implements Repository<ID, Entity> {
+
     @Override
     public DataSource<ID, Entity> getDatasource() {
         return null;
     }
+
+    protected abstract Database getDb();
+    public abstract Class<Entity> getEntityType();
+    public abstract String getPrimaryKeyName();
 
     @Override
     public long count() {
