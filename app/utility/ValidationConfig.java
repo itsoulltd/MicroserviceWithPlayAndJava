@@ -19,7 +19,7 @@ public class ValidationConfig {
             Validator validator = factory.getValidator();
             defaultValidator = validator;
         }
-        return (Validator) defaultValidator;
+        return defaultValidator;
     }
 
     public static <T> String[] validate(Validator validator, T target) {
