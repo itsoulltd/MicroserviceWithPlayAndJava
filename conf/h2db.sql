@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS books (
   created_date TIMESTAMP NULL,
   modified_by VARCHAR(256) NULL,
   modified_date TIMESTAMP NULL,
-  version INTEGER DEFAULT 0,
+  version INTEGER NULL,
   PRIMARY KEY(id)
 );

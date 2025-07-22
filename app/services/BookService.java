@@ -2,10 +2,12 @@ package services;
 
 import domain.entities.Book;
 import domain.models.BookDTO;
+import domain.models.PublicationStatus;
 import domain.repositories.BookRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,12 +42,20 @@ public class BookService {
 
     public Optional<BookDTO> save(BookDTO entity) {
         Book book = BookDTO.revert(entity);
+        book.setCreatedBy(""); //TODO: getAuthPrincipal
+        book.setCreatedDate(LocalDateTime.now());
+        book.setModifiedBy(""); //TODO: getAuthPrincipal
+        book.setModifiedDate(LocalDateTime.now());
+        book.setVersion(0l);
         Optional<Book> saved = repository.save(book);
         return Optional.of(BookDTO.convert(saved.orElse(new Book())));
     }
 
     public Optional<BookDTO> update(BookDTO entity) {
         Book book = BookDTO.revert(entity);
+        book.setModifiedBy(""); //TODO: getAuthPrincipal
+        book.setModifiedDate(LocalDateTime.now());
+        book.setVersion(1l);    // JPA-Take care!
         Optional<Book> update = repository.update(book);
         return Optional.of(BookDTO.convert(update.orElse(new Book())));
     }
