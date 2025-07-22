@@ -16,3 +16,12 @@ GET    /api/v1/students                 controllers.StudentController.retrieveAl
 POST   /api/v1/students                 controllers.StudentController.create(request: Request)
 PUT    /api/v1/students                 controllers.StudentController.update(request: Request)
 DELETE /api/v1/students/:id             controllers.StudentController.delete(id: Int)
+
+# Routing for Books apis: path=/api/v1/books
+GET    /api/v1/books/count           controllers.BookController.count()
+GET    /api/v1/books/:id             controllers.BookController.retrieve(id: Long)
+# E.g. query-parameters for pagination /api/v1/books?page=1&limit=10
+GET    /api/v1/books                 controllers.BookController.retrieveAll(page: Int ?= 1, limit: Int ?= 10)
+POST   /api/v1/books                 controllers.BookController.create(request: Request)
+PUT    /api/v1/books                 controllers.BookController.update(request: Request)
+DELETE /api/v1/books/:id             controllers.BookController.delete(id: Long)
