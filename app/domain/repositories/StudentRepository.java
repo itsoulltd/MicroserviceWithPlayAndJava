@@ -1,14 +1,14 @@
 package domain.repositories;
 
 import domain.entities.Student;
-import domain.repositories.impl.DSRepository;
+import domain.repositories.impl.InMemRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class StudentRepository extends DSRepository<Integer, Student> {
+public class StudentRepository extends InMemRepository<Integer, Student> {
 
     public List<Student> findAll(int page, int limit) {
         int offset = getOffset(page, limit);

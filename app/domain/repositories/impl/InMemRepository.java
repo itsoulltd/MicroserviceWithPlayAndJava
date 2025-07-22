@@ -7,7 +7,7 @@ import domain.repositories.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public class DSRepository<ID, Entity> implements Repository<ID, Entity> {
+public class InMemRepository<ID, Entity> implements Repository<ID, Entity> {
 
     private DataSource<ID, Entity> dataSource = new SimpleDataSource<>();
 
