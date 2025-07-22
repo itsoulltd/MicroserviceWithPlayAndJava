@@ -3,10 +3,7 @@ package domain.repositories.impl;
 import com.it.soul.lab.data.base.DataSource;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.entity.Entity;
-import com.it.soul.lab.sql.query.QueryType;
-import com.it.soul.lab.sql.query.SQLQuery;
-import com.it.soul.lab.sql.query.SQLScalarQuery;
-import com.it.soul.lab.sql.query.SQLSelectQuery;
+import com.it.soul.lab.sql.query.*;
 import com.it.soul.lab.sql.query.models.Table;
 import com.it.soul.lab.sql.query.models.Where;
 import domain.repositories.Repository;
@@ -15,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import play.db.Database;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,17 +67,30 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     @Override
     public List<E> findAll(int page, int limit) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
-            //TODO:
+            int offset = getOffset(page, limit);
+            SQLQuery query = executor.createQueryBuilder(QueryType.SELECT)
+                    .columns()
+                    .from(getEntityType())
+                    .addLimit(limit, offset)
+                    .build();
+            LOG.debug(query.toString());
+            ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
+            Table table = executor.collection(resultSet);
+            List<E> items = table.inflate(getEntityType(), Entity.mapColumnsToProperties(getEntityType()));
+            return items;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
-    public Optional<E> save(Entity entity) {
+    public Optional<E> save(E entity) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
-            //TODO:
+            //If Entity.id is auto-increment = true then Entity.id will be Updated with returned Auto-ID:
+            boolean inserted = entity.insert(executor);
+            LOG.info(entity.tableName() + " insertion was " + (inserted ? "successful." : "failed."));
+            return Optional.of(entity);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
@@ -87,9 +98,11 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     }
 
     @Override
-    public Optional<E> update(Entity entity) {
+    public Optional<E> update(E entity) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
-            //TODO:
+            boolean updated = entity.update(executor);
+            LOG.info(entity.tableName() + " update was " + (updated ? "successful." : "failed."));
+            return Optional.of(entity);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
@@ -99,7 +112,13 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     @Override
     public boolean delete(ID id) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
-            //TODO:
+            SQLQuery query = executor.createQueryBuilder(QueryType.DELETE)
+                    .from(getEntityType())
+                    .where(new Where(getPrimaryKeyName()).isEqualTo(id))
+                    .build();
+            LOG.info(query.bindValueToString());
+            int result = executor.executeDelete((SQLDeleteQuery) query);
+            return result == 1;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
