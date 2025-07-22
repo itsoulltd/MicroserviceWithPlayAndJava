@@ -1,11 +1,24 @@
 package domain.models;
 
 import com.it.soul.lab.sql.entity.Entity;
+import domain.entities.Book;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 
 public class BookDTO extends Entity {
+
+    public static BookDTO convert(Book book) {
+        BookDTO dto = new BookDTO();
+        dto.unmarshallingFromMap(book.marshallingToMap(false), false);
+        return dto;
+    }
+
+    public static Book revert(BookDTO dto) {
+        Book book = new Book();
+        book.unmarshallingFromMap(dto.marshallingToMap(false), false);
+        return book;
+    }
 
     private long id;
     @NotEmpty(message = "Isbn must not be null or empty!")

@@ -3,12 +3,12 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import domain.entities.Book;
-import domain.repositories.BookRepository;
+import domain.models.BookDTO;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import services.BookService;
 import utility.ResponseEntity;
 import utility.ValidationConfig;
 
@@ -18,30 +18,30 @@ import java.util.Optional;
 
 public class BookController extends Controller {
 
-    private BookRepository repository;
+    private BookService bookService;
 
     @Inject
-    public BookController(BookRepository repository) {
-        this.repository = repository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     public Result count() {
-        long count = repository.count();
+        long count = bookService.count();
         ObjectNode result = Json.newObject();
         result.put("count", count);
         return ResponseEntity.ok(result);
     }
 
     public Result retrieve(long id) {
-        final Optional<Book> studentOptional = repository.findById(id);
-        return studentOptional.map(student -> {
-            JsonNode jsonObjects = Json.toJson(student);
+        final Optional<BookDTO> bookOptional = bookService.findById(id);
+        return bookOptional.map(book -> {
+            JsonNode jsonObjects = Json.toJson(book);
             return ResponseEntity.ok(jsonObjects);
         }).orElse(ResponseEntity.notFound("Book with id:" + id + " not found"));
     }
 
     public Result retrieveAll(int page, int limit) {
-        List<Book> result = repository.findAll(page, limit);
+        List<BookDTO> result = bookService.findAll(page, limit);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonData = mapper.convertValue(result, JsonNode.class);
         return ResponseEntity.ok(jsonData);
@@ -53,14 +53,14 @@ public class BookController extends Controller {
             return ResponseEntity.badRequest("Expecting Json data");
         }
         //Deserialize Object from Json:
-        Book book = Json.fromJson(json, Book.class);
+        BookDTO book = Json.fromJson(json, BookDTO.class);
         //Bean-Validation
         String messages = ValidationConfig.validateWithMessage(book);
         if (messages != null) {
             return ResponseEntity.badRequest(messages);
         }
         //Save:
-        Optional<Book> saved = repository.save(book);
+        Optional<BookDTO> saved = bookService.save(book);
         return saved.map(svd -> {
             JsonNode jsonObject = Json.toJson(svd);
             return ResponseEntity.created(jsonObject);
@@ -73,14 +73,14 @@ public class BookController extends Controller {
             return ResponseEntity.badRequest("Expecting Json data");
         }
         //Deserialize Object from Json:
-        Book book = Json.fromJson(json, Book.class);
+        BookDTO book = Json.fromJson(json, BookDTO.class);
         //Bean-Validation
         String messages = ValidationConfig.validateWithMessage(book);
         if (messages != null) {
             return ResponseEntity.badRequest(messages);
         }
         //Update:
-        Optional<Book> updated = repository.update(book);
+        Optional<BookDTO> updated = bookService.update(book);
         return updated.map(upd -> {
             if (upd == null) {
                 return ResponseEntity.notFound("Book not found");
@@ -91,7 +91,7 @@ public class BookController extends Controller {
     }
 
     public Result delete(long id) {
-        boolean status = repository.delete(id);
+        boolean status = bookService.delete(id);
         if (!status) {
             return ResponseEntity.notFound("Book with id:" + id + " not found");
         }
