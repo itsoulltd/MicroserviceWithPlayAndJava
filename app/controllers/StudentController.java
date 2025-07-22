@@ -12,7 +12,6 @@ import utility.ResponseEntity;
 import utility.ValidationConfig;
 
 import javax.inject.Inject;
-import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,12 +53,11 @@ public class StudentController {
         }
         //Deserialize Object from Json:
         Student student = Json.fromJson(json, Student.class);
-        //TODO: Bean-Validation
-        /*Validator validator = ValidationConfig.getValidator();
-        String messages = ValidationConfig.validateWithMessage(validator, student);
+        //Bean-Validation
+        String messages = ValidationConfig.validateWithMessage(student);
         if (messages != null) {
             return ResponseEntity.badRequest(messages);
-        }*/
+        }
         //Save:
         Optional<Student> saved = repository.save(student);
         return saved.map(svd -> {
@@ -75,12 +73,11 @@ public class StudentController {
         }
         //Deserialize Object from Json:
         Student student = Json.fromJson(json, Student.class);
-        //TODO: Bean-Validation
-        /*Validator validator = ValidationConfig.getValidator();
-        String messages = ValidationConfig.validateWithMessage(validator, student);
+        //Bean-Validation
+        String messages = ValidationConfig.validateWithMessage(student);
         if (messages != null) {
             return ResponseEntity.badRequest(messages);
-        }*/
+        }
         //Update:
         Optional<Student> updated = repository.update(student);
         return updated.map(upd -> {
