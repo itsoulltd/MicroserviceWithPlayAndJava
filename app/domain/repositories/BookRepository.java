@@ -19,7 +19,7 @@ public class BookRepository extends JDBCRepository<Long, Book> {
 
     @Override
     protected Database getDb() {
-        return null;
+        return this.db;
     }
 
     @Override
