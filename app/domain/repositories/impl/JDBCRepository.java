@@ -14,7 +14,9 @@ import play.db.Database;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class JDBCRepository<ID, E extends Entity> implements Repository<ID, E> {
 
@@ -99,7 +101,13 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     @Override
     public Optional<E> update(E entity) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
-            boolean updated = entity.update(executor);
+            //find all non-null properties.
+            Map<String, Object> data = entity.marshallingToMap(true);
+            String[] nonNullKeys = data.entrySet().stream()
+                    .filter(entry -> entry.getValue() != null)
+                    .flatMap(entry -> Stream.of(entry.getKey()))
+                    .toArray(String[]::new);
+            boolean updated = entity.update(executor, nonNullKeys);
             LOG.info(entity.tableName() + " update was " + (updated ? "successful." : "failed."));
             return Optional.of(entity);
         } catch (Exception e) {

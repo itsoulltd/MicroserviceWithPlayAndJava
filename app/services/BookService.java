@@ -55,7 +55,7 @@ public class BookService {
         Book book = BookDTO.revert(entity);
         book.setModifiedBy(""); //TODO: getAuthPrincipal
         book.setModifiedDate(LocalDateTime.now());
-        book.setVersion(1l);    // JPA-Take care!
+        book.setVersion(1l);    //TODO: JPA will take care!
         Optional<Book> update = repository.update(book);
         return Optional.of(BookDTO.convert(update.orElse(new Book())));
     }
