@@ -82,12 +82,9 @@ public class BookController extends Controller {
         //Update:
         Optional<BookDTO> updated = bookService.update(book);
         return updated.map(upd -> {
-            if (upd == null) {
-                return ResponseEntity.notFound("Book not found");
-            }
             JsonNode jsonObject = Json.toJson(upd);
             return ResponseEntity.ok(jsonObject);
-        }).orElse(ResponseEntity.internalServerError("Could not update data."));
+        }).orElse(ResponseEntity.notFound("Book with id:" + book.getId() + " not found"));
     }
 
     public Result delete(long id) {

@@ -81,12 +81,9 @@ public class StudentController {
         //Update:
         Optional<Student> updated = repository.update(student);
         return updated.map(upd -> {
-            if (upd == null) {
-                return ResponseEntity.notFound("Student not found");
-            }
             JsonNode jsonObject = Json.toJson(upd);
             return ResponseEntity.ok(jsonObject);
-        }).orElse(ResponseEntity.internalServerError("Could not update data."));
+        }).orElse(ResponseEntity.notFound("Student id not found"));
     }
 
     public Result delete(int id) {
