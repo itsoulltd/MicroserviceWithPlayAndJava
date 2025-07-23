@@ -59,7 +59,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
             LOG.debug(query.toString());
             ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
             List<E> items = getMapper().extract(resultSet);
-            return Optional.ofNullable(items.get(0));
+            return items.size() > 0 ? Optional.ofNullable(items.get(0)) : Optional.empty();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
