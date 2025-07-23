@@ -3,8 +3,8 @@ package domain.repositories.impl;
 import com.it.soul.lab.data.base.DataSource;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.entity.Entity;
+import com.it.soul.lab.sql.entity.RowMapper;
 import com.it.soul.lab.sql.query.*;
-import com.it.soul.lab.sql.query.models.Table;
 import com.it.soul.lab.sql.query.models.Where;
 import domain.repositories.Repository;
 import org.slf4j.Logger;
@@ -21,6 +21,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     private static Logger LOG = LoggerFactory.getLogger(JDBCRepository.class);
 
     protected abstract Database getDb();
+    protected abstract RowMapper<E> getMapper();
     public abstract Class<E> getEntityType();
     public abstract String getPrimaryKeyName();
 
@@ -55,8 +56,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
                     .build();
             LOG.debug(query.toString());
             ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
-            Table table = executor.collection(resultSet);
-            List<E> items = table.inflate(getEntityType(), Entity.mapColumnsToProperties(getEntityType()));
+            List<E> items = getMapper().extract(resultSet);
             return Optional.ofNullable(items.get(0));
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -75,8 +75,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
                     .build();
             LOG.debug(query.toString());
             ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
-            Table table = executor.collection(resultSet);
-            List<E> items = table.inflate(getEntityType(), Entity.mapColumnsToProperties(getEntityType()));
+            List<E> items = getMapper().extract(resultSet);
             return items;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
