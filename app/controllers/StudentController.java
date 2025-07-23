@@ -86,7 +86,7 @@ public class StudentController {
             }
             JsonNode jsonObject = Json.toJson(upd);
             return ResponseEntity.ok(jsonObject);
-        }).orElse(ResponseEntity.internalServerError("Could not create data."));
+        }).orElse(ResponseEntity.internalServerError("Could not update data."));
     }
 
     public Result delete(int id) {

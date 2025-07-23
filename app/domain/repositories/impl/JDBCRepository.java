@@ -91,7 +91,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
             //If Entity.id is auto-increment = true then Entity.id will be Updated with returned Auto-ID:
             boolean inserted = entity.insert(executor);
             LOG.debug(entity.tableName() + " insertion was " + (inserted ? "successful." : "failed."));
-            return Optional.of(entity);
+            return inserted ? Optional.of(entity) : Optional.empty();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
@@ -109,7 +109,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
                     .toArray(String[]::new);
             boolean updated = entity.update(executor, nonNullKeys);
             LOG.debug(entity.tableName() + " update was " + (updated ? "successful." : "failed."));
-            return Optional.of(entity);
+            return updated ? Optional.of(entity) : Optional.empty();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
