@@ -90,7 +90,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
             //If Entity.id is auto-increment = true then Entity.id will be Updated with returned Auto-ID:
             boolean inserted = entity.insert(executor);
-            LOG.info(entity.tableName() + " insertion was " + (inserted ? "successful." : "failed."));
+            LOG.debug(entity.tableName() + " insertion was " + (inserted ? "successful." : "failed."));
             return Optional.of(entity);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -108,7 +108,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
                     .flatMap(entry -> Stream.of(entry.getKey()))
                     .toArray(String[]::new);
             boolean updated = entity.update(executor, nonNullKeys);
-            LOG.info(entity.tableName() + " update was " + (updated ? "successful." : "failed."));
+            LOG.debug(entity.tableName() + " update was " + (updated ? "successful." : "failed."));
             return Optional.of(entity);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -123,7 +123,7 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
                     .from(getEntityType())
                     .where(new Where(getPrimaryKeyName()).isEqualTo(id))
                     .build();
-            LOG.info(query.bindValueToString());
+            LOG.debug(query.bindValueToString());
             int result = executor.executeDelete((SQLDeleteQuery) query);
             return result == 1;
         } catch (Exception e) {

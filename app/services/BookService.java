@@ -28,7 +28,7 @@ public class BookService {
 
     public Optional<BookDTO> findById(Long id) {
         final Optional<Book> optionalBook = repository.findById(id);
-        return Optional.of(BookDTO.convert(optionalBook.orElse(new Book())));
+        return optionalBook.map(BookDTO::convert);
     }
 
     public List<BookDTO> findAll(int page, int limit) {
@@ -47,7 +47,7 @@ public class BookService {
         book.setModifiedDate(LocalDateTime.now());
         book.setVersion(0l);
         Optional<Book> saved = repository.save(book);
-        return Optional.of(BookDTO.convert(saved.orElse(new Book())));
+        return saved.map(BookDTO::convert);
     }
 
     public Optional<BookDTO> update(BookDTO entity) {
@@ -56,7 +56,7 @@ public class BookService {
         book.setModifiedDate(LocalDateTime.now());
         book.setVersion(1l);    //TODO: JPA will take care!
         Optional<Book> update = repository.update(book);
-        return Optional.of(BookDTO.convert(update.orElse(new Book())));
+        return update.map(BookDTO::convert);
     }
 
     public boolean delete(Long id) {
