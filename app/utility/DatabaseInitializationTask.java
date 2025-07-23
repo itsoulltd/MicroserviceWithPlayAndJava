@@ -15,13 +15,13 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @Singleton
-public class InitializeDatabaseTask extends ExecutableTask<Message, Response> {
+public class DatabaseInitializationTask extends ExecutableTask<Message, Response> {
 
     private Application application;
     private Database db;
 
     @Inject
-    public InitializeDatabaseTask(Application application, Database db) {
+    public DatabaseInitializationTask(Application application, Database db) {
         this.application = application;
         this.db = db;
     }

@@ -3,7 +3,7 @@ package controllers;
 import com.infoworks.lab.rest.models.Response;
 import play.mvc.Controller;
 import play.mvc.Result;
-import utility.InitializeDatabaseTask;
+import utility.DatabaseInitializationTask;
 
 import javax.inject.Inject;
 
@@ -13,10 +13,10 @@ import javax.inject.Inject;
  */
 public class HomeController extends Controller {
 
-    private InitializeDatabaseTask task;
+    private DatabaseInitializationTask task;
 
     @Inject
-    public HomeController(InitializeDatabaseTask task) {
+    public HomeController(DatabaseInitializationTask task) {
         this.task = task;
     }
 
