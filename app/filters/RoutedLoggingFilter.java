@@ -38,7 +38,6 @@ public class RoutedLoggingFilter extends Filter {
 
                             long endTime = System.currentTimeMillis();
                             long requestTime = endTime - startTime;
-                            //System.out.println(String.format("%s took %sms and returned %s", actionMethod, requestTime, result.status()));
                             LOG.info("{} took {}ms and returned {}", actionMethod, requestTime, result.status());
 
                             return result.withHeader("Request-Time", "" + requestTime);

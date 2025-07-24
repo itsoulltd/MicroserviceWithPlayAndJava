@@ -39,11 +39,23 @@
     <appender-ref ref="STDOUT"/>
   </appender>
 
+  <!-- OFF ERROR WARN INFO DEBUG TRACE -->
   <logger name="play" level="INFO"/>
-  <logger name="application" level="DEBUG"/>
+  <!--<logger name="application" level="DEBUG"/>-->
+  <logger name="com.zaxxer.hikari" level="OFF"/>
+  <logger name="org.apache" level="OFF"/>
+  <logger name="o.a.p.s" level="OFF"/>
+  <logger name="org.jdbcdslog" level="OFF"/>
+  <logger name="org.jboss" level="OFF"/>
+  <logger name="javax.persistence" level="OFF"/>
 
-  <root level="WARN">
-    <appender-ref ref="ASYNCFILE"/>
+  <logger name="controllers" level="INFO DEBUG ERROR"/>
+  <logger name="services" level="INFO DEBUG ERROR"/>
+  <logger name="utility" level="INFO DEBUG ERROR"/>
+  <logger name="domain.repositories" level="INFO DEBUG ERROR"/>
+
+  <root level="INFO">
+    <!--<appender-ref ref="ASYNCFILE"/>-->
     <appender-ref ref="ASYNCSTDOUT"/>
   </root>
 
