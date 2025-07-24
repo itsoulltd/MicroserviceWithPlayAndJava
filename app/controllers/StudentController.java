@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import domain.entities.Student;
 import domain.repositories.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -17,6 +19,7 @@ import java.util.Optional;
 
 public class StudentController {
 
+    private static Logger LOG = LoggerFactory.getLogger(StudentController.class);
     private StudentRepository repository;
 
     @Inject

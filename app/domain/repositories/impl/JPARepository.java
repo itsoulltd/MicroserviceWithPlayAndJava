@@ -1,12 +1,15 @@
 package domain.repositories.impl;
 
 import domain.repositories.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 public abstract class JPARepository<ID, Entity> implements Repository<ID, Entity> {
 
+    private static Logger LOG = LoggerFactory.getLogger(JPARepository.class);
     public abstract Object getJpaApi();
 
     @Override

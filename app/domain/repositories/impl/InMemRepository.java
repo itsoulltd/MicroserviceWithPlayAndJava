@@ -2,12 +2,15 @@ package domain.repositories.impl;
 
 import com.it.soul.lab.data.base.DataSource;
 import domain.repositories.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 public abstract class InMemRepository<ID, Entity> implements Repository<ID, Entity> {
 
+    private static Logger LOG = LoggerFactory.getLogger(InMemRepository.class);
     public abstract DataSource<ID, Entity> getDatasource();
 
     @Override

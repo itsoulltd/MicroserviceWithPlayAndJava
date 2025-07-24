@@ -3,6 +3,8 @@ package services;
 import domain.entities.Book;
 import domain.models.BookDTO;
 import domain.repositories.BookRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class BookService {
 
+    private static Logger LOG = LoggerFactory.getLogger(BookService.class);
     private BookRepository repository;
 
     @Inject

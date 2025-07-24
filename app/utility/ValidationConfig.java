@@ -1,5 +1,8 @@
 package utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -10,6 +13,7 @@ import java.util.Set;
 
 public class ValidationConfig {
 
+    private static Logger LOG = LoggerFactory.getLogger(ValidationConfig.class);
     public static final String BEAN_VALIDATION_KEY = "Bean_Validation_Key";
     private static Validator defaultValidator;
 

@@ -3,6 +3,8 @@ package domain.repositories;
 import com.it.soul.lab.sql.entity.RowMapper;
 import domain.entities.Book;
 import domain.repositories.impl.JDBCRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.db.Database;
 
 import javax.inject.Inject;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 @Singleton
 public class BookRepository extends JDBCRepository<Long, Book> implements RowMapper<Book> {
 
+    private static Logger LOG = LoggerFactory.getLogger(BookRepository.class);
     private Database db;
 
     @Inject

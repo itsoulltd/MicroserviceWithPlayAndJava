@@ -34,4 +34,11 @@
     #We can use H2 db has many verient (e.g. in-memory or file), we are using file base varient.
     #To initialize the databas schema we have to hit the http://localhost:8080
     
+##### Postgres-DB initialization:
+
+    #For enabling Postgres db we have to spinnup docker-engine (install Docker Desktop on Windows/Mac) 
+    #and run following commends:
+    ~>$ docker start
+    ~>$ docker-compose -f docker-compose-postgres.yaml up -d
+    
 ###### Thanks for viewing! 

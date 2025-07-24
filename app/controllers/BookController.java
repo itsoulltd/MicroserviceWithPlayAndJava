@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import domain.models.BookDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 public class BookController extends Controller {
 
+    private static Logger LOG = LoggerFactory.getLogger(BookController.class);
     private BookService bookService;
 
     @Inject

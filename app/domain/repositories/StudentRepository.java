@@ -4,6 +4,8 @@ import com.it.soul.lab.data.base.DataSource;
 import com.it.soul.lab.data.simple.SimpleDataSource;
 import domain.entities.Student;
 import domain.repositories.impl.InMemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Stream;
 @Singleton
 public class StudentRepository extends InMemRepository<Integer, Student> {
 
+    private static Logger LOG = LoggerFactory.getLogger(StudentRepository.class);
     private DataSource<Integer, Student> dataSource = new SimpleDataSource<>();
 
     @Override

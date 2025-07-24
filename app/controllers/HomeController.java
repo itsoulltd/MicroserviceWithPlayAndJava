@@ -1,6 +1,8 @@
 package controllers;
 
 import com.infoworks.lab.rest.models.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import utility.DatabaseInitializationTask;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
  */
 public class HomeController extends Controller {
 
+    private static Logger LOG = LoggerFactory.getLogger(HomeController.class);
     private DatabaseInitializationTask task;
 
     @Inject
@@ -27,9 +30,9 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        System.out.println("Start UP...");
+        LOG.info("Start UP...");
         Response response = this.task.execute(null);
-        System.out.println(response.getMessage());
+        LOG.info(response.getMessage());
         return ok(views.html.index.render());
     }
 

@@ -4,6 +4,8 @@ import com.infoworks.lab.beans.tasks.nuts.ExecutableTask;
 import com.infoworks.lab.rest.models.Message;
 import com.infoworks.lab.rest.models.Response;
 import com.it.soul.lab.connect.io.ScriptRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.Application;
 import play.db.Database;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Singleton
 public class DatabaseInitializationTask extends ExecutableTask<Message, Response> {
 
+    private static Logger LOG = LoggerFactory.getLogger(DatabaseInitializationTask.class);
     private Application application;
     private Database db;
 
@@ -33,7 +36,7 @@ public class DatabaseInitializationTask extends ExecutableTask<Message, Response
             String filename = application.config().getString("app.db.init.file");
             Optional<File> file = application.environment().getExistingFile(filename);
             if(file.isPresent()) {
-                System.out.println(file.get().getAbsolutePath());
+                LOG.debug("Script Filepath: " + file.get().getAbsolutePath());
                 try(InputStream stream = new FileInputStream(file.get());
                     Connection connection = db.getConnection()) {
                     //Execute:
