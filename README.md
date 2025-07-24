@@ -16,6 +16,9 @@
     ~>$ cd ~/PROJECT-ROOT
     ~>$ sbt run
     
+    ##Now the application server is running on port:8080
+    Goto browser and hit http://localhost:8080
+    
     ##Build project:
     ~>$ compile
     
@@ -23,7 +26,12 @@
     ~>$ test
     #Or
     ~>$ testOnly com.acme.SomeClassTest
-    
     ##End
+    
+##### H2-DB initialization:
+
+    #For simplicity we usaes jdbc rather using jpa-apis.
+    #We can use H2 db has many verient (e.g. in-memory or file), we are using file base varient.
+    #To initialize the databas schema we have to hit the http://localhost:8080
     
 ###### Thanks for viewing! 

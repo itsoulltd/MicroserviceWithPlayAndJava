@@ -1,6 +1,5 @@
 package domain.repositories.impl;
 
-import com.it.soul.lab.data.base.DataSource;
 import com.it.soul.lab.sql.SQLExecutor;
 import com.it.soul.lab.sql.entity.Entity;
 import com.it.soul.lab.sql.entity.RowMapper;
@@ -26,11 +25,6 @@ public abstract class JDBCRepository<ID, E extends Entity> implements Repository
     protected abstract RowMapper<E> getMapper();
     public abstract Class<E> getEntityType();
     public abstract String getPrimaryKeyName();
-
-    @Override
-    public DataSource<ID, E> getDatasource() {
-        return null;
-    }
 
     @Override
     public long count() {

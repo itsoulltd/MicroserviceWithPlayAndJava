@@ -1,16 +1,13 @@
 package domain.repositories.impl;
 
-import com.it.soul.lab.data.base.DataSource;
 import domain.repositories.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class JPARepository<ID, Entity> implements Repository<ID, Entity> {
-    @Override
-    public DataSource<ID, Entity> getDatasource() {
-        return null;
-    }
+public abstract class JPARepository<ID, Entity> implements Repository<ID, Entity> {
+
+    public abstract Object getJpaApi();
 
     @Override
     public long count() {

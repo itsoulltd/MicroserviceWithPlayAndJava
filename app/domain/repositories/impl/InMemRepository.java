@@ -1,28 +1,22 @@
 package domain.repositories.impl;
 
 import com.it.soul.lab.data.base.DataSource;
-import com.it.soul.lab.data.simple.SimpleDataSource;
 import domain.repositories.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class InMemRepository<ID, Entity> implements Repository<ID, Entity> {
+public abstract class InMemRepository<ID, Entity> implements Repository<ID, Entity> {
 
-    private DataSource<ID, Entity> dataSource = new SimpleDataSource<>();
-
-    @Override
-    public DataSource<ID, Entity> getDatasource() {
-        return dataSource;
-    }
+    public abstract DataSource<ID, Entity> getDatasource();
 
     @Override
     public long count() {
-        return dataSource.size();
+        return getDatasource().size();
     }
 
     public Optional<Entity> findById(ID id) {
-        return Optional.ofNullable(dataSource.read(id));
+        return Optional.ofNullable(getDatasource().read(id));
     }
 
     @Override
@@ -41,7 +35,7 @@ public class InMemRepository<ID, Entity> implements Repository<ID, Entity> {
     }
 
     public boolean delete(ID id) {
-        return dataSource.remove(id) != null;
+        return getDatasource().remove(id) != null;
     }
 
 

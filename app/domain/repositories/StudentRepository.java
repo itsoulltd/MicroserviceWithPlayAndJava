@@ -1,14 +1,25 @@
 package domain.repositories;
 
+import com.it.soul.lab.data.base.DataSource;
+import com.it.soul.lab.data.simple.SimpleDataSource;
 import domain.entities.Student;
 import domain.repositories.impl.InMemRepository;
 
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Singleton
 public class StudentRepository extends InMemRepository<Integer, Student> {
+
+    private DataSource<Integer, Student> dataSource = new SimpleDataSource<>();
+
+    @Override
+    public DataSource<Integer, Student> getDatasource() {
+        return dataSource;
+    }
 
     public List<Student> findAll(int page, int limit) {
         int offset = getOffset(page, limit);

@@ -1,12 +1,10 @@
 package domain.repositories;
 
-import com.it.soul.lab.data.base.DataSource;
-
 import java.util.List;
 import java.util.Optional;
 
 public interface Repository<ID, Entity> {
-    DataSource<ID, Entity> getDatasource();
+
     long count();
     Optional<Entity> findById(ID id);
     List<Entity> findAll(int page, int limit);
