@@ -2,6 +2,7 @@ package services;
 
 import domain.entities.Book;
 import domain.models.BookDTO;
+import domain.repositories.Repository;
 import domain.repositories.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private static Logger LOG = LoggerFactory.getLogger(BookService.class);
-    private BookRepository repository;
+    private Repository repository;
 
     @Inject
     public BookService(BookRepository repository) {

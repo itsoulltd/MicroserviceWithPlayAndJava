@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public abstract class JDBCRepository<ID, E extends Entity> implements Repository<ID, E> {
+public abstract class JdbcRepository<ID, E extends Entity> implements Repository<ID, E> {
 
-    private static Logger LOG = LoggerFactory.getLogger(JDBCRepository.class);
+    private static Logger LOG = LoggerFactory.getLogger(JdbcRepository.class);
 
     protected abstract Database getDb();
     protected abstract RowMapper<E> getMapper();
