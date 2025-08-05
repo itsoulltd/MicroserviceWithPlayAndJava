@@ -14,16 +14,16 @@ import java.util.Set;
 public class ValidationConfig {
 
     private static Logger LOG = LoggerFactory.getLogger(ValidationConfig.class);
-    public static final String BEAN_VALIDATION_KEY = "Bean_Validation_Key";
-    private static Validator defaultValidator;
 
+    /**
+     * ValidatorFactory: Implementations are thread-safe and instances are typically cached and reused.
+     * Validator: Validates bean instances. Implementations of this interface must be thread-safe.
+     * @return
+     */
     public static Validator getValidator() {
-        if (defaultValidator == null) {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            Validator validator = factory.getValidator();
-            defaultValidator = validator;
-        }
-        return defaultValidator;
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        return validator;
     }
 
     public static <T> String[] validate(Validator validator, T target) {
