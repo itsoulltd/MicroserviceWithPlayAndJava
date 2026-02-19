@@ -1,6 +1,6 @@
 package domain.repositories;
 
-import com.it.soul.lab.sql.entity.RowMapper;
+import com.infoworks.entity.EntityMapper;
 import domain.entities.Book;
 import domain.repositories.impl.JdbcRepository;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Singleton
-public class BookRepository extends JdbcRepository<Long, Book> implements RowMapper<Book> {
+public class BookRepository extends JdbcRepository<Long, Book> implements EntityMapper<Book> {
 
     private static Logger LOG = LoggerFactory.getLogger(BookRepository.class);
     private Database db;
@@ -39,12 +39,12 @@ public class BookRepository extends JdbcRepository<Long, Book> implements RowMap
     }
 
     @Override
-    protected RowMapper<Book> getMapper() {
+    protected EntityMapper<Book> getMapper() {
         return this;
     }
 
     @Override
-    public Book row(ResultSet rs, int rowNum, int columnCount) throws SQLException {
+    public Book entity(ResultSet rs, int rowNum, int columnCount) throws SQLException {
         Book book = new Book();
         book.setCreatedBy(rs.getString("created_by"));
         book.setCreatedDate(rs.getTimestamp("created_date").toLocalDateTime());

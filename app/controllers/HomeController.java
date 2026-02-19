@@ -1,6 +1,6 @@
 package controllers;
 
-import com.infoworks.lab.rest.models.Response;
+import com.infoworks.objects.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.mvc.Controller;

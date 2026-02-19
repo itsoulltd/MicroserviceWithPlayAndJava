@@ -1,8 +1,8 @@
 package domain.entities;
 
-import com.it.soul.lab.sql.entity.Column;
-import com.it.soul.lab.sql.entity.PrimaryKey;
-import com.it.soul.lab.sql.entity.TableName;
+import com.infoworks.entity.Column;
+import com.infoworks.entity.PrimaryKey;
+import com.infoworks.entity.TableName;
 import domain.models.PublicationStatus;
 
 import java.util.Objects;

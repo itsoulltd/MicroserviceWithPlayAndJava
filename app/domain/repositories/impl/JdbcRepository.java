@@ -1,10 +1,10 @@
 package domain.repositories.impl;
 
-import com.it.soul.lab.sql.SQLExecutor;
-import com.it.soul.lab.sql.entity.Entity;
-import com.it.soul.lab.sql.entity.RowMapper;
-import com.it.soul.lab.sql.query.*;
-import com.it.soul.lab.sql.query.models.Where;
+import com.infoworks.sql.executor.SQLExecutor;
+import com.infoworks.entity.Entity;
+import com.infoworks.entity.EntityMapper;
+import com.infoworks.sql.query.*;
+import com.infoworks.sql.query.models.Where;
 import domain.repositories.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public abstract class JdbcRepository<ID, E extends Entity> implements Repository
     private static Logger LOG = LoggerFactory.getLogger(JdbcRepository.class);
 
     protected abstract Database getDb();
-    protected abstract RowMapper<E> getMapper();
+    protected abstract EntityMapper<E> getMapper();
     public abstract Class<E> getEntityType();
     public abstract String getPrimaryKeyName();
 
@@ -52,7 +52,7 @@ public abstract class JdbcRepository<ID, E extends Entity> implements Repository
                     .build();
             LOG.debug(query.toString());
             ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
-            List<E> items = getMapper().extract(resultSet);
+            List<E> items = getMapper().map(resultSet);
             return items.size() > 0 ? Optional.ofNullable(items.get(0)) : Optional.empty();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -71,7 +71,7 @@ public abstract class JdbcRepository<ID, E extends Entity> implements Repository
                     .build();
             LOG.debug(query.toString());
             ResultSet resultSet = executor.executeSelect((SQLSelectQuery) query);
-            List<E> items = getMapper().extract(resultSet);
+            List<E> items = getMapper().map(resultSet);
             return items;
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -96,7 +96,7 @@ public abstract class JdbcRepository<ID, E extends Entity> implements Repository
     public Optional<E> update(E entity) {
         try (SQLExecutor executor = new SQLExecutor(getDb().getConnection())) {
             //find all non-null properties.
-            Map<String, Object> data = entity.marshallingToMap(true);
+            Map<String, Object> data = entity.marshalling(true);
             String[] nonNullKeys = data.entrySet().stream()
                     .filter(entry -> entry.getValue() != null)
                     .flatMap(entry -> Stream.of(entry.getKey()))

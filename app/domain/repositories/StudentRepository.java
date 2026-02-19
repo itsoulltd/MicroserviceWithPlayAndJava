@@ -1,7 +1,7 @@
 package domain.repositories;
 
-import com.it.soul.lab.data.base.DataSource;
-import com.it.soul.lab.data.simple.SimpleDataSource;
+import com.infoworks.data.base.iDataSource;
+import com.infoworks.data.impl.SimpleDataSource;
 import domain.entities.Student;
 import domain.repositories.impl.InMemRepository;
 import org.slf4j.Logger;
@@ -17,10 +17,10 @@ import java.util.stream.Stream;
 public class StudentRepository extends InMemRepository<Integer, Student> {
 
     private static Logger LOG = LoggerFactory.getLogger(StudentRepository.class);
-    private DataSource<Integer, Student> dataSource = new SimpleDataSource<>();
+    private iDataSource<Integer, Student> dataSource = new SimpleDataSource<>();
 
     @Override
-    public DataSource<Integer, Student> getDatasource() {
+    public iDataSource<Integer, Student> getDatasource() {
         return dataSource;
     }
 

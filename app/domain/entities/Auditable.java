@@ -1,7 +1,7 @@
 package domain.entities;
 
-import com.it.soul.lab.sql.entity.Column;
-import com.it.soul.lab.sql.entity.Entity;
+import com.infoworks.entity.Column;
+import com.infoworks.entity.Entity;
 
 import java.time.LocalDateTime;
 

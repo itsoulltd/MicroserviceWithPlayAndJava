@@ -1,9 +1,9 @@
 package utility;
 
-import com.infoworks.lab.beans.tasks.nuts.ExecutableTask;
-import com.infoworks.lab.rest.models.Message;
-import com.infoworks.lab.rest.models.Response;
-import com.it.soul.lab.connect.io.ScriptRunner;
+import com.infoworks.objects.Message;
+import com.infoworks.objects.Response;
+import com.infoworks.script.SQLScriptExecutor;
+import com.infoworks.tasks.ExecutableTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.Application;
@@ -40,7 +40,7 @@ public class DatabaseInitializationTask extends ExecutableTask<Message, Response
                 try(InputStream stream = new FileInputStream(file.get());
                     Connection connection = db.getConnection()) {
                     //Execute:
-                    ScriptRunner runner = new ScriptRunner();
+                    SQLScriptExecutor runner = new SQLScriptExecutor();
                     String[] cmds = runner.commands(stream);
                     runner.execute(cmds, connection);
                     response.setMessage("DEV MODE: Database initialized.");

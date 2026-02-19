@@ -1,6 +1,6 @@
 package domain.models;
 
-import com.it.soul.lab.sql.entity.Entity;
+import com.infoworks.entity.Entity;
 import domain.entities.Book;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,13 +10,13 @@ public class BookDTO extends Entity {
 
     public static BookDTO convert(Book book) {
         BookDTO dto = new BookDTO();
-        dto.unmarshallingFromMap(book.marshallingToMap(false), false);
+        dto.unmarshalling(book.marshalling(false), false);
         return dto;
     }
 
     public static Book revert(BookDTO dto) {
         Book book = new Book();
-        book.unmarshallingFromMap(dto.marshallingToMap(false), false);
+        book.unmarshalling(dto.marshalling(false), false);
         return book;
     }
 
