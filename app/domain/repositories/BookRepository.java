@@ -44,7 +44,7 @@ public class BookRepository extends JdbcRepository<Long, Book> implements Entity
     }
 
     @Override
-    public Book entity(ResultSet rs, int rowNum, int columnCount) throws SQLException {
+    public Book entity(ResultSet rs, int columnCount, int rowIdx) throws SQLException {
         Book book = new Book();
         book.setCreatedBy(rs.getString("created_by"));
         book.setCreatedDate(rs.getTimestamp("created_date").toLocalDateTime());
